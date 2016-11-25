@@ -1,0 +1,10 @@
+<launch>
+  <env name="MACHINE_PATH" value="$(env HOME)/machine2017" />
+
+  <include file="$(env MACHINE_PATH)/launch/lidar.launch"></include>
+  <include file="$(env MACHINE_PATH)/launch/tf.launch"></include>
+
+  <include file="$(find hector_mapping)/launch/mapping_default.launch">
+    <arg name="odom_frame" value="odom" />
+  </include>
+</launch>
