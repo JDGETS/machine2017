@@ -3,6 +3,8 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 devel
+build_isolated
+devel_isolated
 
 /ros_ws/src/*
 !/ros_ws/src/CMakeLists.txt
