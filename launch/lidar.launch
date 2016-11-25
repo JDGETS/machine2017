@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="urg_node" name="urg_node" type="urg_node">
+    
+  </node>
+
+</launch>

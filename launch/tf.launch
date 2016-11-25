@@ -1,0 +1,14 @@
+<launch>
+  <node pkg="tf"
+        type="static_transform_publisher"
+        name="laser_tf" args="0 0 0 0 0 0 1 base_link laser 30" />
+
+  <node pkg="tf"
+        type="static_transform_publisher"
+        name="map_tf" args="0 0 0 0 0 0 1 odom map 30" />
+
+
+  <node pkg="tf"
+        type="static_transform_publisher"
+        name="base_link_tf" args="0 0 0 0 0 0 1 odom base_link 30" />
+</launch>
