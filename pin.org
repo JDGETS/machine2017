@@ -1,0 +1,5 @@
+* I2C
+| Description         | Address    |
+|---------------------+------------|
+| Adafruit PWM Driver | 0x40, 0x70 |
+| MPU 6050            | 0x68       |
