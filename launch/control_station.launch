@@ -1,0 +1,11 @@
+<launch>
+  <machine name="rpi" address="arvp-pi" username="arvp" />
+
+  <node pkg="rostopic" name="rostopic" type="rostopic" args="list" machine="rpi"/>
+
+<!--
+  <include file="$(find hector_mapping)/launch/mapping_default.launch">
+    <arg name="odom_frame" value="odom" />
+  </include>
+-->
+</launch>
