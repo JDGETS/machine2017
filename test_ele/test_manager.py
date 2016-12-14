@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ball_launcher import BallLauncher
+from ball_launcher import ballLauncher
 
 
 def ball_launcher():
-    bl = BallLauncher.BallLauncher()
+    bl = ballLauncher.BallLauncher()
     print bl.current_elevation_angle
     bl.set_elevation_angle(80)
     print bl.current_elevation_angle

@@ -1,6 +1,8 @@
 __author__ = 'capra'
 
 from inputs import get_gamepad
+import pigpio
+import PCA9685
 
 a = True
 
@@ -32,17 +34,43 @@ class ControllerMachina(object):
 
     def _a_button(self):
         """
-        Moves the trigger down (pushes the ball)
+        Moves the trigger down (pushes the ball) PCA9685 pin 13
         :return:
         """
-        print 'Pressing A'
+        channel = 13
+        low = 1
+        print 'Pressing A: The trigger should move down'
+        pi = pigpio.pi()
+
+        if not pi.connected:
+            exit(0)
+
+        pwm13 = PCA9685.PWM(pi)  # defaults to bus 1, address 0x40
+        pwm13.set_frequency(50)
+        pwm13.set_pulse_width(channel, low)
+        pwm13.cancel()
+
+        pi.stop()
 
     def _b_button(self):
         """
-        Moves the trigger up
+        Moves the trigger up PCA9685 pin 13
         :return:
         """
-        print 'Pressing B'
+        channel = 13
+        high = 2
+        print 'Pressing B: The trigger should move up'
+        pi = pigpio.pi()
+
+        if not pi.connected:
+            exit(0)
+
+        pwm13 = PCA9685.PWM(pi)  # defaults to bus 1, address 0x40
+        pwm13.set_frequency(50)
+        pwm13.set_pulse_width(channel, high)
+        pwm13.cancel()
+
+        pi.stop()
 
     def _x_button(self):
         print 'Pressing X'
@@ -51,19 +79,34 @@ class ControllerMachina(object):
         print 'Pressing Y'
 
     def _dpad_up(self):
-        print 'Pressing up'
+        """
+        PCA9685 pin 11
+        :return:
+        """
+        print 'Pressing up: The launcher should go upwards'
 
     def _dpad_down(self):
-        print 'Pressing down'
+        """
+        PCA9685 pin 11
+        :return:
+        """
+        print 'Pressing down: The launcher should go downwards'
 
     def _dpad_right(self):
-        print 'Pressing right'
+        """
+        PCA9685 pin 12
+        :return:
+        """
+        print 'Pressing right: The launcher should go right'
 
     def _dpad_left(self):
-        print 'Pressing left'
+        """
+        PCA9685 pin 12
+        :return:
+        """
+        print 'Pressing left: The launcher should go left'
 
     def do_action(self, action):
-
         try:
             self._mapper[self._convert_action_to_key(action)]()
         except KeyError:
@@ -73,9 +116,6 @@ class ControllerMachina(object):
         key = action[0] + '_' + str(action[1])
         print 'dic key is: ', key
         return key
-
-def do_a_button():
-    print "doing the a button stuff"
 
 leController = ControllerMachina()
 
