@@ -6,6 +6,8 @@ import PCA9685
 
 a = True
 
+I2C_ADDR=0x40
+
 class ControllerMachina(object):
     """
     Mapping of actions:
@@ -44,7 +46,7 @@ class ControllerMachina(object):
 
         if not pi.connected:
             exit(0)
-
+        pi.bsc_i2c(I2C_ADDR)
         pwm13 = PCA9685.PWM(pi)  # defaults to bus 1, address 0x40
         pwm13.set_frequency(50)
         pwm13.set_pulse_width(channel, low)
@@ -64,7 +66,7 @@ class ControllerMachina(object):
 
         if not pi.connected:
             exit(0)
-
+        pi.bsc_i2c(I2C_ADDR)
         pwm13 = PCA9685.PWM(pi)  # defaults to bus 1, address 0x40
         pwm13.set_frequency(50)
         pwm13.set_pulse_width(channel, high)
