@@ -104,6 +104,7 @@ CATKIN_IGNORE
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *$py.class
+*.pyc
 
 
 # Distribution / packaging
