@@ -50,15 +50,17 @@ drift_z = 0
 
 rospy.loginfo("Measuring average drift of gyroscope")
 
-for _ in range(100):
+for _ in range(300):
+    if rospy.is_shutdown():
+        break
     drift_x += read_word_2c(0x43) / 131
     drift_y += read_word_2c(0x45) / 131
     drift_z += read_word_2c(0x47) / 131
     time.sleep(0.01)
 
-drift_x /= 100
-drift_y /= 100
-drift_z /= 100
+drift_x /= 300
+drift_y /= 300
+drift_z /= 300
 
 rospy.loginfo("Ready")
 while not rospy.is_shutdown():
@@ -78,6 +80,8 @@ while not rospy.is_shutdown():
     rx = alpha * (vx * dt + rx) + (1.0 - alpha) * accx
     ry = alpha * (vy * dt + ry) + (1.0 - alpha) * accy
     rz += vz * dt
+
+    print '%f %f %f' % (rx, ry, rz)
 
     last_time = time.time()
 

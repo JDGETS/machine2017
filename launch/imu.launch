@@ -1,0 +1,4 @@
+<launch>
+  <include file="launch/lidar.launch"></include>
+  <node pkg="imu" name="mpu6050" type="mpu6050.py" />
+</launch>

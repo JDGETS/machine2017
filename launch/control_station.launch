@@ -2,11 +2,8 @@
   <node pkg="rviz" name="rviz" type="rviz">
   </node>
 
+  <include file="launch/kalman.launch"></include>
   <include file="launch/tf.launch"></include>
-
-  <!--
-  <include file="$(find ai)/launch/move_base.launch"></include>
-  -->
 
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
 
@@ -18,7 +15,7 @@
     <!-- Tf use -->
     <param name="use_tf_scan_transformation" value="true"/>
     <param name="use_tf_pose_start_estimate" value="false"/>
-    <param name="pub_map_odom_transform" value="true"/>
+    <param name="pub_map_odom_transform" value="false"/>
 
     <!-- Map size / start point -->
     <param name="map_resolution" value="0.01"/>
