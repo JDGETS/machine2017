@@ -26,7 +26,7 @@
 
     <param name="imu0_remove_gravitational_acceleration" value="true" />
 
-    <param name="pose0" value="/slam_out_pose"/>
+    <param name="pose0" value="/poseupdate"/>
     <rosparam param="pose0_config">
       [true, true, false,
        false, false, true,
