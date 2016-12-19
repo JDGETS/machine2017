@@ -50,7 +50,7 @@ drift_z = 0
 
 rospy.loginfo("Measuring average drift of gyroscope")
 
-for _ in range(300):
+for _ in range(1000):
     if rospy.is_shutdown():
         break
     drift_x += read_word_2c(0x43) / 131
@@ -58,51 +58,56 @@ for _ in range(300):
     drift_z += read_word_2c(0x47) / 131
     time.sleep(0.01)
 
-drift_x /= 300
-drift_y /= 300
-drift_z /= 300
+drift_x /= 1000
+drift_y /= 1000
+drift_z /= 1000
+
+rospy.loginfo("Drift x: %f", drift_x)
+rospy.loginfo("Drift y: %f", drift_y)
+rospy.loginfo("Drift z: %f", drift_z)
 
 rospy.loginfo("Ready")
 while not rospy.is_shutdown():
     dt = time.time() - last_time
 
+    # gyroscope in deg/s
     vx = read_word_2c(0x43) / 131 - drift_x
     vy = read_word_2c(0x45) / 131 - drift_y
     vz = read_word_2c(0x47) / 131 - drift_z
+
+    # accelerometer is in g
     ax = read_word_2c(0x3b) / 16384.0
     ay = read_word_2c(0x3d) / 16384.0
     az = read_word_2c(0x3f) / 16384.0
 
-    accy = math.degrees(math.atan(-ax / math.sqrt(ay ** 2 + az ** 2)));
-    accx = math.degrees(math.atan(ay / math.sqrt(ax ** 2 + az ** 2)));
+    accy = math.degrees(math.atan(-ax / math.sqrt(ay ** 2 + az ** 2)))
+    accx = math.degrees(math.atan(ay / math.sqrt(ax ** 2 + az ** 2)))
 
     alpha = 0.98
     rx = alpha * (vx * dt + rx) + (1.0 - alpha) * accx
     ry = alpha * (vy * dt + ry) + (1.0 - alpha) * accy
     rz += vz * dt
 
-    print '%f %f %f' % (rx, ry, rz)
-
     last_time = time.time()
 
     msg = Imu()
-    msg.header.frame_id = 'odom'
+    msg.header.frame_id = 'base_link'
     msg.header.stamp = rospy.Time.now()
 
-    msg.angular_velocity.x = vx
-    msg.angular_velocity.y = vy
-    msg.angular_velocity.z = vz
+    msg.angular_velocity.x = math.radians(vx)
+    msg.angular_velocity.y = math.radians(vy)
+    msg.angular_velocity.z = math.radians(vz)
 
-    msg.linear_acceleration.x = ax
-    msg.linear_acceleration.y = ay
-    msg.linear_acceleration.z = az
+    msg.linear_acceleration.x = ax * 9.80665
+    msg.linear_acceleration.y = ay * 9.80665
+    msg.linear_acceleration.z = az * 9.80665
 
     pub.publish(msg)
 
     pose = PoseStamped()
     pose.header = msg.header
     o = pose.pose.orientation
-    o.x, o.y, o.z, o.w = quaternion_from_euler(*map(math.radians, [rx, ry, rz]))
+    o.x, o.y, o.z, o.w = quaternion_from_euler(*map(math.radians, [rx, ry, rz / 250.0])) # here be dragons
 
     pub_pose.publish(pose)
 
