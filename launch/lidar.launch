@@ -1,3 +1,7 @@
 <launch>
-  <node pkg="urg_node" name="urg_node" type="urg_node"></node>
+  <node pkg="urg_node" name="urg_node" type="urg_node">
+    <param name="publish_intensity" value="false" />
+    <param name="angle_min" value="-1.6708" />
+    <param name="angle_max" value="1.6708" />
+  </node>
 </launch>
