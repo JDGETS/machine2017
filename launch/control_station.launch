@@ -3,6 +3,11 @@
   </node>
 
   <include file="launch/tf.launch"></include>
+
+  <node pkg="imu" name="publish_baselink" type="publish_baselink.py" output="screen">
+  </node>
+
+
   <include file="launch/kalman.launch"></include>
 
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
@@ -15,7 +20,7 @@
     <param name="pub_map_odom_transform" value="false"/>
 
     <param name="map_resolution" value="0.01"/>
-    <param name="map_size" value="300"/>
+    <param name="map_size" value="600"/>
     <param name="map_start_x" value="0.5"/>
     <param name="map_start_y" value="0.5" />
     <param name="map_multi_res_levels" value="2" />

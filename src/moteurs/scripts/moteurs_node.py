@@ -16,6 +16,13 @@ channels = [left_forward, left_backward, right_forward, right_backward]
 
 set_duty_cycle = rospy.ServiceProxy('set_duty_cycle', SetDutyCycle)
 
+
+def callback(data):
+    twist = Twist()
+    twist.linear.x = 4*data.axes[1]
+    twist.angular.z = 4*data.axes[0]
+    pub.publish(twist)
+
 def handle_speed(forward, backward, speed):
     if speed > 0:
         set_duty_cycle(backward, 0)
