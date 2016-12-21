@@ -4,9 +4,6 @@
 
   <include file="launch/tf.launch"></include>
 
-  <node pkg="imu" name="publish_baselink" type="publish_baselink.py" output="screen">
-  </node>
-
   <include file="launch/kalman.launch"></include>
 
   <include file="launch/gmapping.launch"></include>
