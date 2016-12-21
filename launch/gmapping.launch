@@ -1,0 +1,9 @@
+<launch>
+  <node pkg="scan_tools" name="laser_scan_matcher" type="laser_scan_matcher" output="screen">
+    <remap from="/imu/data" to="/imu" />
+  </node>
+
+  <node pkg="gmapping" name="gmapping" type="slam_gmapping" output="screen">
+    <param name="base_frame" value="base_footprint" />
+  </node>
+</launch>
