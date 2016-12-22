@@ -4,9 +4,19 @@
 
   <include file="launch/tf.launch"></include>
 
+
   <include file="launch/kalman.launch"></include>
 
-  <include file="launch/gmapping.launch"></include>
+
+  <node pkg="map_server" name="map_server" type="map_server" args="$(env HOME)/map.yaml"/>
+
+  <node pkg="amcl" name="amcl" type="amcl">
+    <param name="base_frame_id" value="base_footprint" />
+    param
+  </node>
+
+  <node pkg="rosservice" name="initialize_pose" type="rosservice" args="call --wait /global_localization {}" output="screen">
+  </node>
 
   <!--
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
@@ -26,8 +36,10 @@
 
     <param name="update_factor_free" value="0.4"/>
     <param name="update_factor_occupied" value="0.9" />
-    <param name="map_update_distance_thresh" value="0.05"/>
+
+    <param name="map_update_distance_thresh" value="0.01"/>
     <param name="map_update_angle_thresh" value="0.0174533" />
+
     <param name="laser_min_dist" value="0.05" />
     <param name="laser_max_dist" value="1.0" />
     <param name="laser_z_min_value" value = "-1.0" />
@@ -38,6 +50,6 @@
     <param name="scan_subscriber_queue_size" value="5"/>
     <param name="scan_topic" value="/scan"/>
     <param name="tf_map_scanmatch_transform_frame_name" value="scanmatcher_frame" />
-    </node>
+  </node>
   -->
 </launch>
