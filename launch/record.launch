@@ -1,0 +1,7 @@
+<launch>
+  <include file="launch/control_station.launch"></include>
+
+  <node pkg="rosbag" name="record" type="record" args="/scan /imu /imu_pose">
+  </node>
+
+</launch>
