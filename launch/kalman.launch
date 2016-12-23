@@ -23,10 +23,9 @@
     </rosparam>
 
     <param name="imu0_differential" value="false"/>
-
     <param name="imu0_remove_gravitational_acceleration" value="true" />
 
-    <param name="pose0" value="/slam_pose"/>
+    <param name="pose0" value="/slam_pose_cov"/>
     <rosparam param="pose0_config">
       [true, true, false,
        false, false, true,
@@ -34,5 +33,6 @@
        false, false, false,
        false, false, false]
     </rosparam>
+
   </node>
 </launch>

@@ -9,7 +9,6 @@
   <!--
   <node pkg="map_server" name="map_server" type="map_server" args="$(env HOME)/machine2017/maps/map.yaml"/>
 
-
   <node pkg="amcl" name="amcl" type="amcl">
     <param name="base_frame_id" value="base_footprint" />
     <param name="tf_broadcast" value="false" />
@@ -21,9 +20,23 @@
   </node>
   -->
 
+  <node pkg="hector_trajectory_server" name="hector_trajectory_server" type="hector_trajectory_server">
+    <param name="trajectory_publish_rate" value="10" />
+    <param name="trajectory_update_rate" value="10" />
+    <param name="source_frame_name" value="base_footprint" />
+  </node>
+
+
+  <node pkg="ai" name="static_covariance" type="static_covariance.py">
+    <remap from="/pose" to="/slam_pose" />
+    <remap from="/pose_cov" to="/slam_pose_cov" />
+  </node>
+
   <node name="crsm_slam_node" type="crsm_slam_node" pkg="crsm_slam" ns="crsm_slam" output="screen">
     <remap from="laser_scan" to="/scan" />
   </node>
 
   <rosparam file="$(find crsm_slam)/config/crsm_slam/crsm_slam_parameters.yaml" command="load" ns="crsm_slam" />
+
+  <include file="$(find ai)/launch/move_base.launch"></include>
 </launch>

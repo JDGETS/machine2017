@@ -23,7 +23,7 @@ desired_number_of_picked_rays : 40
 
 #~ Publishing frequencies (Hz)
 occupancy_grid_map_freq : 1.0
-robot_pose_tf_freq : 5.0
+robot_pose_tf_freq : 15.0
 trajectory_freq : 1.0
 
 #~ Robot parameters
