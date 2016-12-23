@@ -1,8 +1,7 @@
 <launch>
   <param name="/use_sim_time" value="true" />
 
-  <node pkg="rosbag" name="play" type="play" args="-l $(env HOME)/.ros/2016-12-22-13-23-08.bag --clock">
-  </node>
+  <node pkg="rosbag" name="play" type="play" args="-l $(env HOME)/.ros/2016-12-22-13-23-08.bag --clock" />
 
   <include file="launch/control_station.launch"></include>
 </launch>
