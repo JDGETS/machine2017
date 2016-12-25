@@ -1,8 +1,21 @@
 global_costmap:
   global_frame: /map
-  robot_base_frame: base_footprint
+  robot_base_frame: base_link
   update_frequency: 1.0
   static_map: true
-  inflation_radius: 0.2
-  cost_scaling_factor: 5.0
-  footprint_padding: 0.13
+  inflation_radius: 0.1
+  cost_scaling_factor: 3.0
+  footprint_padding: 0.03
+
+planner_patience: 1.5
+controller_patience: 1.5
+recovery_behavior_enabled: true
+
+
+
+obstacle_range: 2.5
+raytrace_range: 3.0
+footprint: [[-0.010795, -0.01397], [-0.010795, 0.01397], [0.010795, 0.01397], [0.010795, -0.01397]]
+observation_sources: ""
+
+track_unknown_space: false
