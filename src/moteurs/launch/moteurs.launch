@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="moteurs" name="control_moteurs" type="moteurs_node.py" />
+</launch>
