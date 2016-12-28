@@ -11,6 +11,31 @@ BACKWARDS = 2
 SPINNING = 3
 STOPPED = 4
 
+'''
+buttons = [
+A,
+B,
+X,
+Y,
+LB,
+RB,
+Back,
+Start,
+Logitech,
+Analog Left Click,
+Analog Right Click
+]
+
+axes = [
+Analog Left X,
+Analog Left Y,
+LT (1: released, -1: fully pressed),
+Analog Left X,
+Analog Right Y,
+unused,
+unused
+]
+'''
 
 buttons = {"left": "axes:0:+",
            "right": "axes:0:-",
