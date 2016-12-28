@@ -30,8 +30,9 @@ axes = [
 Analog Left X,
 Analog Left Y,
 LT (1: released, -1: fully pressed),
-Analog Left X,
+Analog Right X,
 Analog Right Y,
+RT (1: released, -1: fully pressed),
 unused,
 unused
 ]
