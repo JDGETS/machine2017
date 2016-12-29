@@ -6,19 +6,9 @@
 
   <include file="launch/kalman.launch"></include>
 
-  <!--
-  <node pkg="map_server" name="map_server" type="map_server" args="$(env HOME)/machine2017/maps/map.yaml"/>
+  <node pkg="ai" name="launcher_tfs" type="launcher_tf.py">
 
-  <node pkg="amcl" name="amcl" type="amcl">
-    <param name="base_frame_id" value="base_footprint" />
-    <param name="tf_broadcast" value="false" />
-    <param name="update_min_d" value="0.005" />
-    <param name="update_min_a" value="0.0174533" />
-    <param name="laser_max_beams" value="100" />
-    <param name="use_map_topic" value="true" />
-    <param name="odom_frame_id" value="odom" />
   </node>
-  -->
 
   <node pkg="hector_trajectory_server" name="hector_trajectory_server" type="hector_trajectory_server">
     <param name="trajectory_publish_rate" value="10" />

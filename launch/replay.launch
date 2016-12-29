@@ -3,5 +3,10 @@
 
   <node pkg="rosbag" name="play" type="play" args="-l $(env HOME)/.ros/2016-12-22-13-23-08.bag --clock" />
 
+  <node pkg="ai" name="find_walls" type="find_walls.py" output="screen">
+    
+  </node>
+
+
   <include file="launch/control_station.launch"></include>
 </launch>

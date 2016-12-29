@@ -23,17 +23,17 @@ def handle_angle_up(msg):
     angle_up = msg.data
 
 
-rospy.Subscriber('/angle_base', Float32, handle_angle_base)
-rospy.Subscriber('/angle_up', Float32, handle_angle_up)
+rospy.Subscriber('/launcher/angle_base', Float32, handle_angle_base)
+rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
 
 while not rospy.is_shutdown():
     angle = tf.transformations.quaternion_from_euler(0, 0, angle_base)
 
-    br.sendTransform((0, 0, 0),
+    br.sendTransform((0, 0, 0.2),
                      angle,
                      rospy.Time.now(),
                      "launcher_base",
-                     "launcher")
+                     "base_link")
 
     angle = tf.transformations.quaternion_from_euler(0, angle_up, 0)
     br.sendTransform((-0.05, 0, 0),
