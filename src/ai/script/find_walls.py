@@ -9,13 +9,14 @@ from geometry_msgs.msg import PolygonStamped, Polygon, Point32
 from nav_msgs.msg import OccupancyGrid
 import sensor_msgs.point_cloud2 as pc2
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Header
+from std_msgs.msg import Header, Float32
+import tf
 
 rospy.init_node('find_walls')
 
 terrain = rospy.Publisher('/terrain', PolygonStamped, queue_size=10)
 
-rate = rospy.Rate(10)
+rate = rospy.Rate(30)
 terrain_width = 304.8
 terrain_height = 152.4
 goals_height = [0.889, 1.143, 0.889]
@@ -93,6 +94,10 @@ def handle_map(msg):
 rospy.Subscriber('/map', OccupancyGrid, handle_map)
 
 goals_publisher = rospy.Publisher('/goals', PointCloud2, queue_size=10)
+ball_trajectory = rospy.Publisher('/ball_trajectory', PolygonStamped, queue_size=10)
+
+br = tf.TransformBroadcaster()
+
 
 while not rospy.is_shutdown():
     if len(goals) > 0:
@@ -103,5 +108,11 @@ while not rospy.is_shutdown():
         msg = pc2.create_cloud_xyz32(header, goals)
 
         goals_publisher.publish(msg)
+        now = rospy.Time.now()
+
+        for i, (x, y, z) in enumerate(goals):
+            base_tf = "goal" + str(i) + "_base"
+            br.sendTransform((x, y, 0), (0, 0, 0, 1), now, base_tf, "map")
+            br.sendTransform((0, 0, z), (0, 0, 0, 1), now, "goal" + str(i) + "_ring", base_tf)
 
     rate.sleep()

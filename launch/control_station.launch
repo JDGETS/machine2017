@@ -6,7 +6,7 @@
 
   <include file="launch/kalman.launch"></include>
 
-  <node pkg="ai" name="launcher_tfs" type="launcher_tf.py">
+  <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py">
 
   </node>
 
