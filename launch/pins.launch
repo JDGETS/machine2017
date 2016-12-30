@@ -4,4 +4,11 @@
   <param name="/pins/lift_down_sensor_pin" value="27"/>
   <param name="/pins/lift_up_channel" value="5"/>
   <param name="/pins/lift_down_channel" value="6"/>
+
+  <!-- Moteurs -->
+  <param name="/pins/motors_left_forward" value="0" />
+  <param name="/pins/motors_left_backward" value="1" />
+  <param name="/pins/motors_right_forward" value="2" />
+  <param name="/pins/motors_right_backward" value="3" />
+
 </launch>
