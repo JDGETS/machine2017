@@ -1,0 +1,7 @@
+<launch>
+  <!-- Lift -->
+  <param name="/pins/lift_up_sensor_pin" value="26"/>
+  <param name="/pins/lift_down_sensor_pin" value="27"/>
+  <param name="/pins/lift_up_channel" value="5"/>
+  <param name="/pins/lift_down_channel" value="6"/>
+</launch>
