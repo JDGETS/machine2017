@@ -1,7 +1,9 @@
 obstacle_range: 2.5
 raytrace_range: 3.0
 footprint: [[-0.010795, -0.01397], [-0.010795, 0.01397], [0.010795, 0.01397], [0.010795, -0.01397]]
-observation_sources: laser_scan_sensor
+observation_sources: laser_scan_sensor fake_walls
+
 laser_scan_sensor: {sensor_frame: laser, data_type: LaserScan, topic: /scan, marking: true, clearing: true, observation_persistence: 0.1}
+fake_walls: {sensor_frame: world, data_type: PointCloud2, topic: /fake_walls, marking: true, clearing: true, observation_persistence: 0.1}
 
 track_unknown_space: false

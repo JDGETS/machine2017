@@ -10,5 +10,10 @@
 
   </node>
 
+  <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen">
+
+  </node>
+
+
   <include file="launch/control_station.launch"></include>
 </launch>
