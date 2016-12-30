@@ -33,15 +33,15 @@ LT (1: released, -1: fully pressed),
 Analog Right X,
 Analog Right Y,
 RT (1: released, -1: fully pressed),
-unused,
-unused
+Arrow x,
+Arrow y
 ]
 '''
 
 buttons = {"left": "axes:0:+",
            "right": "axes:0:-",
-           "accelerate": "axes:1:+",
-           "deccelerate": "axes:1:-",
+           "accelerate": "axes:7:+",
+           "deccelerate": "axes:7:-",
            "forward": "buttons:1",
            "backwards": "buttons:2",
            "spin_left": "buttons:4",
@@ -49,9 +49,9 @@ buttons = {"left": "axes:0:+",
            "horn": "buttons:8"}
 
 linear_increment = 0.1
-max_linear_vel = 2.0
-min_linear_vel = -1.0
-default_linear_vel = 0.3
+max_linear_vel = 0.85
+min_linear_vel = -0.85
+default_linear_vel = 0.7
 
 angular_increment = 0.1
 max_angular_vel = 0.8
@@ -109,7 +109,7 @@ def process_input(msg):
             change_state(STOPPED)
 
     if get_button_value(msg, "horn") > 0:
-        start_horn()
+        pass
 
 
 def change_state(new_state):
