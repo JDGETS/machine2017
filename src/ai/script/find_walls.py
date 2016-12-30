@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import itertools
 import math
-from geometry_msgs.msg import PolygonStamped, Polygon, Point32
+from geometry_msgs.msg import PolygonStamped, Polygon, Point32, PoseStamped
 from nav_msgs.msg import OccupancyGrid
 import sensor_msgs.point_cloud2 as pc2
 from sensor_msgs.msg import PointCloud2
@@ -15,6 +15,8 @@ import tf
 rospy.init_node('find_walls')
 
 terrain = rospy.Publisher('/terrain', PolygonStamped, queue_size=10)
+terrain_origin = None
+angle = None
 
 rate = rospy.Rate(30)
 terrain_width = 304.8
@@ -26,6 +28,8 @@ goals = []
 
 def handle_map(msg):
     global points
+    global terrain_origin
+    global angle
 
     if points != None:
         return
@@ -82,6 +86,20 @@ def handle_map(msg):
 
     points.append(top_corners[1])
 
+    ox, oy = min(points[1:3], key=lambda (x, y): x)
+    ox /= 100.0
+    oy /= 100.0
+    ox += origin.x
+    oy += origin.y
+
+    px = ox * math.cos(-angle) - oy * math.sin(-angle)
+    py = oy * math.cos(-angle) + ox * math.sin(-angle)
+
+    ox += origin.x
+    oy += origin.y
+
+    terrain_origin = [-px, -py, 0]
+
     msg = PolygonStamped()
     msg.header.frame_id = 'map'
     msg.header.stamp = rospy.Time.now()
@@ -91,13 +109,12 @@ def handle_map(msg):
 
     terrain.publish(msg)
 
+
 rospy.Subscriber('/map', OccupancyGrid, handle_map)
 
 goals_publisher = rospy.Publisher('/goals', PointCloud2, queue_size=10)
-ball_trajectory = rospy.Publisher('/ball_trajectory', PolygonStamped, queue_size=10)
 
 br = tf.TransformBroadcaster()
-
 
 while not rospy.is_shutdown():
     if len(goals) > 0:
@@ -114,5 +131,9 @@ while not rospy.is_shutdown():
             base_tf = "goal" + str(i) + "_base"
             br.sendTransform((x, y, 0), (0, 0, 0, 1), now, base_tf, "map")
             br.sendTransform((0, 0, z), (0, 0, 0, 1), now, "goal" + str(i) + "_ring", base_tf)
+
+    if angle != None and terrain_origin != None:
+        r = tf.transformations.quaternion_from_euler(0, 0, -angle)
+        br.sendTransform(terrain_origin, r, now, "map", "world")
 
     rate.sleep()
