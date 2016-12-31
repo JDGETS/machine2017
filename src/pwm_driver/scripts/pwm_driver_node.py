@@ -6,11 +6,12 @@ from pwm_driver.msg import *
 
 rospy.init_node('pwm_driver')
 
+i2c_address = int(rospy.get_param('~i2c_address', '0x40'), 0)
+
 pi = pigpio.pi()
-pwm = PWM(pi) # defaults to bus 1, address 0x40
+pwms = PWM(pi, address=i2c_address)
 
 pwm.set_frequency(50)
-
 
 def handle_duty_cycle(msg):
     pwm.set_duty_cycle(msg.channel, msg.value)

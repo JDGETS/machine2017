@@ -1,5 +1,15 @@
 <launch>
-  <env name="MACHINE_PATH" value="$(env HOME)/machine2017" />
+  <arg name="MACHINE_PATH" value="$(env HOME)/machine2017" />
 
-  <include file="$(env MACHINE_PATH)/launch/lidar.launch"></include>
+  <include file="$(arg MACHINE_PATH)/launch/lidar.launch"></include>
+
+  <node pkg="imu" name="mpu6050" type="mpu6050.py" />
+
+  <node pkg="pwm_driver" name="pwm_driver" type="pwm_driver_node.py" ns="pwm1">
+    <param name="i2c_address" value="0x40" />
+  </node>
+  
+  <node pkg="pwm_driver" name="pwm_driver" type="pwm_driver_node.py" ns="pwm2">
+    <param name="i2c_address" value="0x41" />
+  </node>
 </launch>

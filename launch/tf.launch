@@ -7,10 +7,6 @@
         type="static_transform_publisher"
         name="odom_tf" args="0 0 0 0 0 0 1 map odom 100" />
 
-  <!--
-  <node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0 world map 100" />
-  -->
-
   <node pkg="tf"
         type="static_transform_publisher"
         name="base_link_tf" args="0 0 0 0 0 0 1 base_footprint base_link 100" />

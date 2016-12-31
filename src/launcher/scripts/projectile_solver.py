@@ -32,12 +32,9 @@ def findvelocityandangle(xRob, yRob, zRob, target):
         teta = np.arctan(xRob/(yRob - target.y))
 
 
-    print("angle horizontal :", teta)
-
     # 2. trouver la distance directe entre le robot et la cible par pythagore
     d = np.sqrt((target.x - xRob)**2 + (target.y - yRob)**2) * 2
 
-    print("Distance d :", d)
 
     # 3. trouver l'angle vertical du lanceur de balles ainsi que la vitesse a donner a la balle
     # pour que la hauteur maximale de la trajectoire du projectile soit le milieu de l'anneau cible

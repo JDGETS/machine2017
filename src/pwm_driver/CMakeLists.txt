@@ -43,14 +43,15 @@ find_package(catkin REQUIRED COMPONENTS rospy std_msgs message_generation)
 add_message_files(
   FILES
   DutyCycle.msg
+  PulseWidth.msg
 )
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  DIRECTORY srv
-  FILES
-  SetDutyCycle.srv
-)
+# add_service_files(
+#   DIRECTORY srv
+#   FILES
+#
+# )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
