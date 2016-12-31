@@ -10,11 +10,17 @@ import time
 if __name__ == '__main__':
     # pi.set_PWM_dutycycle()
     pi = pigpio.pi()
-    while (1):
-        time.sleep(10)
-        pi.set_PWM_dutycycle(21, 0)
-        time.sleep(10)
-        pi.set_PWM_dutycycle(21, 127)
-        time.sleep(10)
-        pi.set_PWM_dutycycle(21, 255)     
+    value = 0
+    while (1)
+        pi.set_PWM_dutycycle(21, value)
+        time.sleep(5)
+        value += 10
+        if value > 255:
+            value = 255
+            pi.set_PWM_dutycycle(21, value)
+            time.sleep(10)
+            value = 0
+ 
+    pi.stop()
+     
         
