@@ -1,3 +1,0 @@
-<launch>
-	<node pkg="pin_test" name="led_test" type="led_test.py" output="screen" />
-</launch>

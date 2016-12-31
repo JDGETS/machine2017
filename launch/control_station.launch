@@ -6,9 +6,7 @@
 
   <include file="launch/kalman.launch"></include>
 
-  <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py">
-
-  </node>
+  <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py" />
 
   <node pkg="hector_trajectory_server" name="hector_trajectory_server" type="hector_trajectory_server">
     <param name="trajectory_publish_rate" value="10" />
@@ -28,5 +26,25 @@
 
   <rosparam file="$(find crsm_slam)/config/crsm_slam/crsm_slam_parameters.yaml" command="load" ns="crsm_slam" />
 
-  <include file="$(find ai)/launch/move_base.launch"></include>
+  <group>
+    <remap from="/cmd_vel" to="/cmd_vel_auto" />
+    <include file="$(find ai)/launch/move_base.launch"></include>
+  </group>
+
+  <group>
+    <remap from="/cmd_vel" to="/cmd_vel_man" />
+    <include file="$(find joy_broadcaster)/launch/joy_broadcaster.launch"></include>
+  </group>
+
+  <node pkg="topic_tools" name="cmd_vel_mux" type="mux" args="/cmd_vel /cmd_vel_auto /cmd_vel_man" />
+
+  <node pkg="ai" name="find_walls" type="find_walls.py" output="screen" />
+
+  <node pkg="launcher" name="place_launcher" type="place_launcher.py" output="screen" />
+
+  <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
+
+  <node pkg="ai" name="invert_scan" type="invert_scan.py">
+  </node>
+
 </launch>

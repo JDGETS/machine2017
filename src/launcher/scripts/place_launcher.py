@@ -10,6 +10,7 @@ from nav_msgs.msg import Path
 import projectile_solver as launcher
 import numpy as np
 import math
+from pwm_driver.msg import DutyCycle
 
 rospy.init_node('place_launcher')
 

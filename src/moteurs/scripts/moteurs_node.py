@@ -16,7 +16,7 @@ max_speed = rospy.get_param('~max_speed', 0.9)
 
 channels = [left_forward, left_backward, right_forward, right_backward]
 
-pub = rospy.Publisher('/duty_cycle', DutyCycle, queue_size=10)
+pub = rospy.Publisher('/pwm1/duty_cycle', DutyCycle, queue_size=10)
 
 def clamp(x, a, b):
     return max(min(x, b), a)
