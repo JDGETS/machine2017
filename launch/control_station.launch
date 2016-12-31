@@ -6,9 +6,7 @@
 
   <include file="launch/kalman.launch"></include>
 
-  <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py">
-
-  </node>
+  <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py" />
 
   <node pkg="hector_trajectory_server" name="hector_trajectory_server" type="hector_trajectory_server">
     <param name="trajectory_publish_rate" value="10" />
@@ -45,4 +43,8 @@
   <node pkg="launcher" name="place_launcher" type="place_launcher.py" output="screen" />
 
   <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
+
+  <node pkg="ai" name="invert_scan" type="invert_scan.py">
+  </node>
+
 </launch>
