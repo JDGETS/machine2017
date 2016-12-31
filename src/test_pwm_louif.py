@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # pi.set_PWM_dutycycle()
     pi = pigpio.pi()
     value = 0
-    while (1)
+    while (1):
         pi.set_PWM_dutycycle(21, value)
         time.sleep(5)
         value += 10
