@@ -3,17 +3,5 @@
 
   <node pkg="rosbag" name="play" type="play" args="-l $(env HOME)/.ros/2016-12-22-13-23-08.bag --clock" />
 
-  <node pkg="ai" name="find_walls" type="find_walls.py" output="screen">
-  </node>
-
-  <node pkg="launcher" name="place_launcher" type="place_launcher.py" output="screen">
-
-  </node>
-
-  <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen">
-
-  </node>
-
-
   <include file="launch/control_station.launch"></include>
 </launch>
