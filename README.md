@@ -27,4 +27,4 @@ Cette node s'occupe de géré la position du scissor lift. Deux capteurs permett
 Cette node est une implémentation pour le [Adafruit 16-Channel 12-bit PWM/Servo Driver - I2C interface - PCA9685](https://www.adafruit.com/product/815). La node permet de contrôle les 16 cannaux de la chip soit par un duty cycle (0%-100%) ou bien en microsecondes. Les topics utilisés sont respectivement `/duty_cycle` avec un message de type pwm_driver/DutyCycle et `/pulse_width` avec un message de type `pwm_driver/PulseWidth`
 
 #### `joy_broadcaster teleop.py`
-Cette node est adapté de du package [https://github.com/clubcapra/Ibex/tree/master/src/capra_teleop](capra_teleop) du [http://www.clubcapra.com/](Club Capra). Elle permet d'interpréter les messages de type `sensor_msgs/Joy` diffuser par la node `joy joy` qui contient les entrés de la manette.
+Cette node est adapté de du package [capra_teleop](https://github.com/clubcapra/Ibex/tree/master/src/capra_teleop) du [Club Capra](http://www.clubcapra.com/). Elle permet d'interpréter les messages de type `sensor_msgs/Joy` diffuser par la node `joy joy` qui contient les entrés de la manette.
