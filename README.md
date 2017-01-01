@@ -24,7 +24,17 @@ Implémentation de l'IMU MPU-6050 pour ROS. Les valeurs brutes sont retransmises
 Cette node s'occupe de géré la position du scissor lift. Deux capteurs permettent de déterminé si les positions du lift sont atteintes. Le lift est contrôllé par le topic `/lift` de type `std_msgs/String` qui indique la position à désiré (`up` ou `down`).
 
 #### `pwm_driver pwm_driver_node.py`
-Cette node est une implémentation pour le [Adafruit 16-Channel 12-bit PWM/Servo Driver - I2C interface - PCA9685](https://www.adafruit.com/product/815). La node permet de contrôle les 16 cannaux de la chip soit par un duty cycle (0%-100%) ou bien en microsecondes. Les topics utilisés sont respectivement `/duty_cycle` avec un message de type pwm_driver/DutyCycle et `/pulse_width` avec un message de type `pwm_driver/PulseWidth`
+Cette node est une implémentation pour le [Adafruit 16-Channel 12-bit PWM/Servo Driver - I2C interface - PCA9685](https://www.adafruit.com/product/815). La node permet de contrôle les 16 cannaux de la chip soit par un duty cycle (0%-100%) ou bien en microsecondes. Les topics utilisés sont respectivement `/duty_cycle` avec un message de type `pwm_driver/DutyCycle` et `/pulse_width` avec un message de type `pwm_driver/PulseWidth`
 
 #### `joy_broadcaster teleop.py`
-Cette node est adapté de du package [capra_teleop](https://github.com/clubcapra/Ibex/tree/master/src/capra_teleop) du [Club Capra](http://www.clubcapra.com/). Elle permet d'interpréter les messages de type `sensor_msgs/Joy` diffuser par la node `joy joy` qui contient les entrés de la manette.
+Cette node est adapté de du package [capra_teleop](https://github.com/clubcapra/Ibex/tree/master/src/capra_teleop) du [Club Capra](http://www.clubcapra.com/). Elle permet d'interpréter les messages de type `sensor_msgs/Joy` diffuser par la node `joy joy` qui contient les entrées de la manette.
+
+#### `ai find_walls.py`
+Node qui permet de déterminer les extrémités du terrain et calculer la transformation entre le `/map` et `/world`. Cette transformation permet de simplifier les calculs des éléements d'intérêts du terrain en placant le coin bas droit à la position (0, 0). La node publie aussi des transformation pour la position des buts encore une fois pour simplifier les calculs.
+
+![Map](http://i.imgur.com/t5gM7D7.png)
+
+#### `ai obstacle_generator`
+*Hack* pour contrôler les mouvements autonome de `move_base`. La node permet de générer de faux obstacles afin de contraindre le trajet du véhicule. Par exemple, le véhicule ne pouvait pas passer au millieu du terrain, seulement par les passages secrets et les ponts levis.
+
+
