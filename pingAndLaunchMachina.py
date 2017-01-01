@@ -3,6 +3,7 @@
 
 import subprocess
 import time
+import sys
 
 
 def pingOk(sHost):
@@ -20,3 +21,4 @@ if __name__ == '__main__':
         if pingOk(hostname):
             print "It's on!"
             time.sleep(5)
+            sys.exit()
