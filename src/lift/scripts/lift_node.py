@@ -10,6 +10,7 @@ pi = pigpio.pi()
 rospy.init_node('lift_node')
 
 pub = rospy.Publisher('/pwm1/duty_cycle', DutyCycle, queue_size=10)
+position_pub = rospy.Publisher('/lift/position', String, queue_size=10)
 
 lift_up_sensor_pin = int(rospy.get_param('/pins/lift_up_sensor_pin'))
 lift_down_sensor_pin = int(rospy.get_param('/pins/lift_down_sensor_pin'))
@@ -66,6 +67,7 @@ while not rospy.is_shutdown():
         position = old_direction
         activate_motor()
         print 'position = ' + position
+        position_pub.publish(String("position"))
 
     old_direction = direction
     rate.sleep()
