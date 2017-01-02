@@ -69,8 +69,5 @@ def handle_msg(msg):
 
 
 rospy.Subscriber('/place_launcher', Byte, handle_msg)
-rate = rospy.Rate(10)
 
-while not rospy.is_shutdown():
-    handle_msg(Byte(0))
-    rate.sleep()
+rospy.spin()

@@ -11,4 +11,10 @@
   <param name="/pins/motors_right_forward" value="2" />
   <param name="/pins/motors_right_backward" value="3" />
 
+  <!-- Launcher -->
+  <param name="/pins/launcher_motor_left_channel" value="13" />
+  <param name="/pins/launcher_motor_right_channel" value="14" />
+  <param name="/pins/launcher_base_channel" value="10" />
+  <param name="/pins/launcher_up_channel" value="11" />
+
 </launch>
