@@ -2,7 +2,13 @@
 
 import rospy
 from pwm_driver.msg import PulseWidth
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Byte
+import pigpio
+import time
+
+lift_bas = 7
+lift_haut = 8
+lanceur = 9
 
 rospy.init_node('launcher_node')
 
@@ -18,6 +24,8 @@ pub.publish(PulseWidth(motor_left_channel, 750))
 pub.publish(PulseWidth(motor_right_channel, 750))
 
 rospy.sleep(3)
+
+COUNT = 0
 
 def map_range(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
@@ -35,8 +43,22 @@ def handle_speed(msg):
 
 
 def handle_angle_base(msg):
-    # todo
-    pass
+    angle = msg.data
+    # todo: correction angle avec mapping
+    global COUNT
+    pi = pigpio()
+
+    if pi.read(lanceur) == 1:
+        time.sleep(1)
+        angle = 0
+
+    angle = getAngleFromTF()
+
+    pub.publish(PulseWidth(angle_base_channel, angle))
+
+def getAngleFromTF():
+    # TODO, get value from tf compare
+    return 0
 
 def handle_angle_up(msg):
     angle = msg.data
@@ -44,9 +66,14 @@ def handle_angle_up(msg):
 
     pub.publish(PulseWidth(angle_base_channel, angle))
 
+def update_count(msg):
+    global COUNT
+    COUNT = msg.data
+
 
 rospy.Subscriber('/launcher/speed', Float32, handle_speed)
 rospy.Subscriber('/launcher/angle_base', Float32, handle_angle_base)
 rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
+rospy.Subscriber('/ball_count', Byte, update_count)
 
 rospy.spin()

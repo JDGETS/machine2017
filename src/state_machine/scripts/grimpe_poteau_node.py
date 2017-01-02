@@ -60,7 +60,7 @@ class E2(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome2'])
         self.pub_scissor = rospy.Publisher('/scissor', String, queue_size=10)
-        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.sub_joy = rospy.Subscriber("/joy", Joy, self.joy_callback)
         self.transition = False
 
     def joy_callback(self, data):
@@ -92,7 +92,7 @@ class E3(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome3'])
         self.pub_pince = rospy.Publisher('/pince', String, queue_size=10)
-        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.sub_joy = rospy.Subscriber("/joy", Joy, self.joy_callback)
         self.transition = False
 
     def execute(self, userdata):
@@ -123,7 +123,7 @@ class E4(smach.State):
         smach.State.__init__(self, outcomes=['outcome4'])
         self.pub_magnet = rospy.Publisher('/magnet', String, queue_size=10)
         self.pub_scissor = rospy.Publisher('/scissor', String, queue_size=10)
-        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.sub_joy = rospy.Subscriber("/joy", Joy, self.joy_callback)
         self.transition = False
 
     def execute(self, userdata):
@@ -159,7 +159,7 @@ class E5(smach.State):
         smach.State.__init__(self, outcomes=['outcome5'])
         self.pub_magnet = rospy.Publisher('/magnet', String, queue_size=10)
         self.pub_intake = rospy.Publisher('/intake', String, queue_size=10)
-        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.sub_joy = rospy.Subscriber("/joy", Joy, self.joy_callback)
         self.transition = False
 
     def execute(self, userdata):
@@ -193,7 +193,7 @@ class E6(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome6'])
         self.pub_intake = rospy.Publisher('/intake', String, queue_size=10)
-        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.sub_joy = rospy.Subscriber("/joy", Joy, self.joy_callback)
         self.transition = False
 
     def execute(self, userdata):
@@ -219,29 +219,25 @@ class E6(smach.State):
             self.transition = True
 
 def main():
-    rospy.init_node('grimpe_poteau_state_machine')
 
+    rospy.init_node('grimpe_poteau_state_machine', log_level=rospy.DEBUG)
+    rospy.logdebug('Hallo')
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['outcome6'])
 
     # Open the container
     with sm:
         # Add states to the container
-        smach.StateMachine.add('E1', E1(),
-                               transitions={'outcome1': 'E2'})
-        smach.StateMachine.add('E2', E2(),
-                               transitions={'outcome2': 'E3'})
-        smach.StateMachine.add('E3', E3(),
-                               transitions={'outcome3': 'E4'})
-        smach.StateMachine.add('E4', E4(),
-                               transitions={'outcome4': 'E5'})
-        smach.StateMachine.add('E5', E5(),
-                               transitions={'outcome5': 'E6'})
-        smach.StateMachine.add('E6', E6(),
-                               transitions={'outcome6': 'outcome6'})
+        smach.StateMachine.add('E1', E1(), transitions={'outcome1': 'E2'})
+        smach.StateMachine.add('E2', E2(), transitions={'outcome2': 'E3'})
+        smach.StateMachine.add('E3', E3(), transitions={'outcome3': 'E4'})
+        smach.StateMachine.add('E4', E4(), transitions={'outcome4': 'E5'})
+        smach.StateMachine.add('E5', E5(), transitions={'outcome5': 'E6'})
+        smach.StateMachine.add('E6', E6(), transitions={'outcome6': 'outcome6'})
     # Execute SMACH plan
     outcome = sm.execute()
 
 
 if __name__ == '__main__':
+    rospy.loginfo('Hallo')
     main()

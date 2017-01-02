@@ -33,6 +33,7 @@ def handle_msg(msg):
 
         a = math.atan2(robot_trans[1], robot_trans[0])
 
+
         angle_base.publish(Float32(a))
 
         (launcher_pos, _) = listener.lookupTransform("map", "launcher_base", now)
