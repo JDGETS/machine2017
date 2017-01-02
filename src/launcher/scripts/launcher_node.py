@@ -35,16 +35,14 @@ def handle_speed(msg):
 
 
 def handle_angle_base(msg):
-    angle = msg.data
-    angle = -1.4367 * angle + 171.61
-    angle = map_range(angle, 0, 180, 900, 2100)
-
-    pub.publish(PulseWidth(angle_base_channel, angle))
-
-
-def handle_angle_up(msg):
     # todo
     pass
+
+def handle_angle_up(msg):
+    angle = msg.data
+    angle = -10.422 * angle + 2159.2
+
+    pub.publish(PulseWidth(angle_base_channel, angle))
 
 
 rospy.Subscriber('/launcher/speed', Float32, handle_speed)
