@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import roslib
-import roslib.load_manifest('smach_tutorials')
 import rospy
 import smach
 import smach_ros
 import time
 from std_msgs.msg import String
-
+from sensor_msgs.msg import Joy
 """
 Grimpe poteau state machine
 States:
@@ -24,10 +23,10 @@ States:
 class E1(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome1'])
-        self.pub_pince = rospy.Publisher('pince', String, queue_size=10)
-        self.pub_scissor = rospy.Publisher('scissor', String, queue_size=10)
+        self.pub_pince = rospy.Publisher('/pince', String, queue_size=10)
+        self.pub_scissor = rospy.Publisher('/scissor', String, queue_size=10)
         self.sub_scissor = rospy.Subscriber('/scissor', String, self.callback)
-
+        self.scissor_lift_state = "lower"
 
     def execute(self, userdata):
         """
@@ -44,22 +43,29 @@ class E1(smach.State):
         message_scissor.data = "rise"
         rospy.loginfo(message_pince)
         rospy.loginfo(message_scissor)
-        self.pub_pince.publish(message_pince)
-        self.pub_scissor.publish(message_scissor)
+        while self.scissor_lift_state == 'lower':
+            self.pub_pince.publish(message_pince)
+            self.pub_scissor.publish(message_scissor)
+            rate.sleep()
 
-        rate.sleep()
+        return 'outcome1'
 
     def callback(self, data):
-        isFullyRiser = data.data
-
-        if isFullyRiser:
-            return 'outcome1'
+        if data.data == "risen":
+            self.scissor_lift_state = "risen"
 
 
 class E2(smach.State):
+
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome2'])
-        self.pub_scissor = rospy.Publisher('scissor', String, queue_size=10)
+        self.pub_scissor = rospy.Publisher('/scissor', String, queue_size=10)
+        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.transition = False
+
+    def joy_callback(self, data):
+        if data.buttons[0] == 1:  # A button
+            self.transition = True
 
     def execute(self, userdata):
         """
@@ -74,15 +80,20 @@ class E2(smach.State):
         message_scissor = String()
         message_scissor.data = "stop"
         rospy.loginfo(message_scissor)
-        self.pub_scissor.publish(message_scissor)
 
-        rate.sleep()
+        while self.transition == False:
+            self.pub_scissor.publish(message_scissor)
+            rate.sleep()
+
         return 'outcome2'
+
 
 class E3(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome3'])
-        self.pub_pince = rospy.Publisher('pince', String, queue_size=10)
+        self.pub_pince = rospy.Publisher('/pince', String, queue_size=10)
+        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.transition = False
 
     def execute(self, userdata):
         """
@@ -95,15 +106,25 @@ class E3(smach.State):
         message_pince = String()
         message_pince.data = "close"
         rospy.loginfo(message_pince)
-        self.pub_pince.publish(message_pince)
-        rate.sleep()
+
+        while self.transition == False:
+            self.pub_pince.publish(message_pince)
+            rate.sleep()
+
         return 'outcome3'
+
+    def joy_callback(self, data):
+        if data.buttons[0] == 1:
+            self.transition = True
+
 
 class E4(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome4'])
-        self.pub_magnet = rospy.Publisher('magnet', String, queue_size=10)
-        self.pub_scissor = rospy.Publisher('scissor', String, queue_size=10)
+        self.pub_magnet = rospy.Publisher('/magnet', String, queue_size=10)
+        self.pub_scissor = rospy.Publisher('/scissor', String, queue_size=10)
+        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.transition = False
 
     def execute(self, userdata):
         """
@@ -120,17 +141,26 @@ class E4(smach.State):
         message_scissor.data = "lower"
         rospy.loginfo(message_magnet)
         rospy.loginfo(message_scissor)
-        self.pub_magnet.publish(message_magnet)
-        self.pub_scissor.publish(message_scissor)
 
-        rate.sleep()
+        while self.transition == False:
+            self.pub_magnet.publish(message_magnet)
+            self.pub_scissor.publish(message_scissor)
+            rate.sleep()
+
         return 'outcome4'
+
+    def joy_callback(self, data):
+        if data.buttons[0] == 1:
+            self.transition = True
+
 
 class E5(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome5'])
-        self.pub_magnet = rospy.Publisher('magnet', String, queue_size=10)
-        self.pub_intake = rospy.Publisher('intake', String, queue_size=10)
+        self.pub_magnet = rospy.Publisher('/magnet', String, queue_size=10)
+        self.pub_intake = rospy.Publisher('/intake', String, queue_size=10)
+        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.transition = False
 
     def execute(self, userdata):
         """
@@ -148,16 +178,23 @@ class E5(smach.State):
         message_intake.data = "run"
         rospy.loginfo(message_magnet)
         rospy.loginfo(message_intake)
-        self.pub_magnet.publish(message_magnet)
-        self.pub_intake.publish(message_intake)
 
-        rate.sleep()
+        while self.transition == False:
+            self.pub_magnet.publish(message_magnet)
+            self.pub_intake.publish(message_intake)
         return 'outcome5'
+
+    def joy_callback(self, data):
+        if data.buttons[0] == 1:
+            self.transition = True
+
 
 class E6(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['outcome6'])
-        self.pub_intake = rospy.Publisher('intake', String, queue_size=10)
+        self.pub_intake = rospy.Publisher('/intake', String, queue_size=10)
+        self.rospy.Subscriber("/joy", Joy, self.joy_callback)
+        self.transition = False
 
     def execute(self, userdata):
         """
@@ -170,13 +207,16 @@ class E6(smach.State):
         message_intake = String()
         message_intake.data = "run"
         rospy.loginfo(message_intake)
-        self.pub_intake.publish(message_intake)
 
-        rate.sleep()
+        while self.transition == False:
+            self.pub_intake.publish(message_intake)
+            rate.sleep()
 
         return 'outcome6'
 
-
+    def joy_callback(self, data):
+        if data.buttons[0] == 1:
+            self.transition = True
 
 def main():
     rospy.init_node('grimpe_poteau_state_machine')
