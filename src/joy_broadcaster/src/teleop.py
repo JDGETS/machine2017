@@ -5,6 +5,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 import rospkg
 import subprocess
+from topic_tools.srv import MuxSelect
 
 FORWARD = 1
 BACKWARDS = 2
@@ -46,7 +47,7 @@ buttons = {"left": "axes:0:+",
            "backwards": "buttons:2",
            "spin_left": "buttons:4",
            "spin_right": "buttons:5",
-           "horn": "buttons:8"}
+           "change_state": "buttons:8"}
 
 linear_increment = 0.1
 max_linear_vel = 0.85
@@ -65,6 +66,17 @@ last_angular_acceleration = 0
 rotating = False
 state = STOPPED
 
+# states = [booting, sur le terrain, autonomous, manuel]
+robot_state = 0
+
+scan_mux = rospy.ServiceProxy('/scan_select', MuxSelect)
+cmd_vel_mux = rospy.ServiceProxy('/cmd_vel_select', MuxSelect)
+
+def activate_scan():
+    scan_mux('/scan_raw')
+
+def disable_autonomous():
+    cmd_vel_mux('/cmd_vel_man')
 
 def process_input(msg):
     global FORWARD, BACKWARDS, SPINNING, STOPPED
@@ -108,8 +120,21 @@ def process_input(msg):
         else:
             change_state(STOPPED)
 
-    if get_button_value(msg, "horn") > 0:
-        pass
+    global robot_state
+
+    if get_button_value(msg, "change_state") > 0:
+        if robot_state < 3:
+            robot_state += 1
+
+        if robot_state == 1:
+            activate_scan()
+
+        if robot_state == 2:
+            # send goal
+            pass
+
+        if robot_state == 3:
+            disable_autonomous()
 
 
 def change_state(new_state):

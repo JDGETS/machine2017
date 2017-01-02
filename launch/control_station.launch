@@ -44,6 +44,8 @@
 
   <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
 
+  <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan /scan_raw_dump /scan_raw" />
+
   <node pkg="ai" name="invert_scan" type="invert_scan.py">
   </node>
 
