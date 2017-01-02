@@ -48,7 +48,12 @@ rospy.Subscriber('/lift', String, handle_msg)
 
 def handle_sensor_change(gpio, level, tick):
     global direction
-    direction = 'stop'
+
+    if direction == 'up' and gpio == lift_up_sensor_pin:
+        direction = 'stop'
+
+    elif direction == 'down' and gpio == lift_down_sensor_pin:
+        direction = 'stop'
 
 
 pi.callback(lift_up_sensor_pin, pigpio.EITHER_EDGE, handle_sensor_change)
