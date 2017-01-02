@@ -30,7 +30,7 @@ def handle_speed(forward, backward, speed):
         pub.publish(DutyCycle(backward, 0))
         pub.publish(DutyCycle(forward, speed))
     else:
-        pub.publish(DutyCycle(backward, speed))
+        pub.publish(DutyCycle(backward, abs(speed)))
         pub.publish(DutyCycle(forward, 0))
 
 
