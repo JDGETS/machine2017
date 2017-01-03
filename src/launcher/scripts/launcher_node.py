@@ -52,18 +52,23 @@ def handle_angle_base(msg):
         time.sleep(1)
         angle = 0
 
-    angle = getAngleFromTF()
+    angle = get_angle_from_TF()
 
     pub.publish(PulseWidth(angle_base_channel, angle))
 
-def getAngleFromTF():
+def get_angle_from_TF():
     # TODO, get value from tf compare
     return 0
 
 def handle_angle_up(msg):
-    angle = msg.data
-    angle = -10.422 * angle + 2159.2
+    pente = -10.422
+    offset = 2159.2
+    angle = pente * msg.data + offset
 
+    pi = pigpio()
+
+    if pi.read(lanceur) == 1:  # Ball present
+        angle = offset
     pub.publish(PulseWidth(angle_base_channel, angle))
 
 def update_count(msg):

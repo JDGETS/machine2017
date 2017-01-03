@@ -3,6 +3,7 @@
 import rospy
 from pwm_driver.msg import DutyCycle
 from geometry_msgs.msg import Twist
+from std_msgs import String
 
 rospy.init_node('moteurs')
 

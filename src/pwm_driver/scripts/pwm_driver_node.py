@@ -9,7 +9,7 @@ rospy.init_node('pwm_driver')
 i2c_address = int(rospy.get_param('~i2c_address', '0x40'), 0)
 
 pi = pigpio.pi()
-pwms = PWM(pi, address=i2c_address)
+pwm = PWM(pi, address=i2c_address)
 
 pwm.set_frequency(50)
 
