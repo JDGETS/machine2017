@@ -3,13 +3,13 @@
 import rospy
 from pwm_driver.msg import DutyCycle
 from geometry_msgs.msg import Twist
-from std_msgs import String
+from std_msgs.msg import String
 
 rospy.init_node('moteurs')
 
 # PWM channels
 left_forward = rospy.get_param('/pins/motors_left_forward', 0)
-left_backward = rospy.get_param('/pins/motors_left_backward', 1)
+gleft_backward = rospy.get_param('/pins/motors_left_backward', 1)
 right_forward = rospy.get_param('/pins/motors_right_forward', 2)
 right_backward = rospy.get_param('/pins/motors_right_backward', 3)
 robot_width = float(rospy.get_param('~robot_width', 0.3))
