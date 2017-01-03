@@ -14,7 +14,6 @@
     <param name="source_frame_name" value="base_footprint" />
   </node>
 
-
   <node pkg="ai" name="static_covariance" type="static_covariance.py">
     <remap from="/pose" to="/slam_pose" />
     <remap from="/pose_cov" to="/slam_pose_cov" />
@@ -46,7 +45,9 @@
 
   <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan /scan_raw_dump /scan_raw" />
 
-  <node pkg="ai" name="invert_scan" type="invert_scan.py">
-  </node>
+  <node pkg="ai" name="invert_scan" type="invert_scan.py" />
 
+  <!--
+  <node pkg="ai" name="autonomous" type="autonomous.py" output="screen"/>
+  -->
 </launch>

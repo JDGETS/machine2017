@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="moteurs" name="moteurs" type="moteurs_node.py" />
+
+  <include file="$(find joy_broadcaster)/launch/joy_broadcaster.launch"></include>
+</launch>

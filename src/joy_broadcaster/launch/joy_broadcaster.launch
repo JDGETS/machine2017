@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="joy_broadcaster" name="joy_manette" type="teleop.py" />
+  <node pkg="joy_broadcaster" name="joy_manette" type="teleop.py" output="screen"/>
   <node pkg="joy" name="joy" type="joy_node">
      <param name="dev" type="string" value="/dev/input/js0" />
   </node>
