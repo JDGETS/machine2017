@@ -2,7 +2,7 @@
 
 import rospy
 from pwm_driver.msg import PulseWidth
-from std_msgs.msg import Float32, Byte, Bool
+from std_msgs.msg import Float32, Byte, Bool, Empty
 import pigpio
 import time
 
@@ -71,9 +71,17 @@ def handle_trigger(msg):
         pub.publish(PulseWidth(trigger_channel, 800))
 
 
+def handle_launch(msg):
+    handle_trigger(Bool(True))
+    rospy.sleep(1)
+    handle_trigger(Bool(False))
+
+
 rospy.Subscriber('/launcher/speed', Float32, handle_speed)
 rospy.Subscriber('/launcher/angle_base', Float32, handle_angle_base)
 rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
 rospy.Subscriber('/launcher/trigger', Bool, handle_trigger)
+
+rospy.Subscriber('/launcher/launch', Empty, handle_launch)
 
 rospy.spin()
