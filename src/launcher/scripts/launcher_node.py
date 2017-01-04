@@ -52,9 +52,6 @@ def handle_angle_base(msg):
 
     pub.publish(PulseWidth(angle_base_channel, angle))
 
-def get_angle_from_TF():
-    # TODO, get value from tf compare
-    return 0
 
 def handle_angle_up(msg):
     pente = -10.422
@@ -62,10 +59,6 @@ def handle_angle_up(msg):
     angle = pente * msg.data + offset
 
     pub.publish(PulseWidth(angle_up_channel, angle))
-
-def update_count(msg):
-    global COUNT
-    COUNT = msg.data
 
 
 def handle_trigger(msg):
@@ -82,6 +75,5 @@ rospy.Subscriber('/launcher/speed', Float32, handle_speed)
 rospy.Subscriber('/launcher/angle_base', Float32, handle_angle_base)
 rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
 rospy.Subscriber('/launcher/trigger', Bool, handle_trigger)
-rospy.Subscriber('/ball_count', Byte, update_count)
 
 rospy.spin()
