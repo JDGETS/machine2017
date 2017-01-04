@@ -1,8 +1,7 @@
 <launch>
-  <node pkg="pwm_driver" name="pwm_driver" type="pwm_driver.py" />
+  <node pkg="pwm_driver" name="pwm_driver" type="pwm_driver_node.py" />
 
   <node pkg="launcher" name="launcher_node" type="launcher_node.py">
-    
   </node>
 
 </launch>

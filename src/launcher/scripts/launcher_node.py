@@ -2,7 +2,7 @@
 
 import rospy
 from pwm_driver.msg import PulseWidth
-from std_msgs.msg import Float32, Byte
+from std_msgs.msg import Float32, Byte, Bool
 import pigpio
 import time
 
