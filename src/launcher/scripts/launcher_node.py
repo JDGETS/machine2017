@@ -18,14 +18,18 @@ motor_right_channel = rospy.get_param('/pins/launcher_motor_right_channel', 14)
 angle_base_channel = rospy.get_param('/pins/launcher_base_channel', 10)
 angle_up_channel = rospy.get_param('/pins/launcher_up_channel', 11)
 
+trigger_channel = rospy.get_param('/pins/launcher_trigger_channel', 5)
+
 pub = rospy.Publisher('/pulse_width', PulseWidth, queue_size=10)
 
 pub.publish(PulseWidth(motor_left_channel, 750))
 pub.publish(PulseWidth(motor_right_channel, 750))
 
-rospy.sleep(3)
+# True if trigger is open
+# False if trigger is closed
+trigger_state = False
 
-COUNT = 0
+rospy.sleep(3)
 
 def map_range(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
@@ -64,9 +68,20 @@ def update_count(msg):
     COUNT = msg.data
 
 
+def handle_trigger(msg):
+    global trigger_state
+    trigger_state = msg.data
+
+    if trigger_state:
+        pub.publish(PulseWidth(trigger_channel, 200))
+    else:
+        pub.publish(PulseWidth(trigger_channel, 800))
+
+
 rospy.Subscriber('/launcher/speed', Float32, handle_speed)
 rospy.Subscriber('/launcher/angle_base', Float32, handle_angle_base)
 rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
+rospy.Subscriber('/launcher/trigger', Bool, handle_trigger)
 rospy.Subscriber('/ball_count', Byte, update_count)
 
 rospy.spin()
