@@ -44,15 +44,7 @@ def handle_speed(msg):
 
 def handle_angle_base(msg):
     angle = msg.data
-    # todo: correction angle avec mapping
-    global COUNT
-    pi = pigpio()
-
-    if pi.read(lanceur) == 1:
-        time.sleep(1)
-        angle = 0
-
-    angle = get_angle_from_TF()
+    angle = int(2.7314 * angle + 1474.1)
 
     pub.publish(PulseWidth(angle_base_channel, angle))
 
@@ -65,11 +57,7 @@ def handle_angle_up(msg):
     offset = 2159.2
     angle = pente * msg.data + offset
 
-    pi = pigpio()
-
-    if pi.read(lanceur) == 1:  # Ball present
-        angle = offset
-    pub.publish(PulseWidth(angle_base_channel, angle))
+    pub.publish(PulseWidth(angle_up_channel, angle))
 
 def update_count(msg):
     global COUNT
