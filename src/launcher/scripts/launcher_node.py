@@ -3,7 +3,6 @@
 import rospy
 from pwm_driver.msg import PulseWidth
 from std_msgs.msg import Float32, Byte, Bool, Empty
-import pigpio
 import time
 
 lift_bas = 7
@@ -70,7 +69,7 @@ def handle_trigger(msg):
 
 def handle_launch(msg):
     handle_trigger(Bool(True))
-    rospy.sleep(1)
+    rospy.sleep(0.5)
     handle_trigger(Bool(False))
 
 
