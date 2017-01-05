@@ -18,7 +18,7 @@ motor_right_channel = rospy.get_param('/pins/launcher_motor_right_channel', 14)
 angle_base_channel = rospy.get_param('/pins/launcher_base_channel', 10)
 angle_up_channel = rospy.get_param('/pins/launcher_up_channel', 11)
 
-trigger_channel = rospy.get_param('/pins/launcher_trigger_channel', 5)
+trigger_channel = rospy.get_param('/pins/launcher_trigger_channel', 12)
 
 pub = rospy.Publisher('/pulse_width', PulseWidth, queue_size=10)
 

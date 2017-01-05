@@ -16,6 +16,7 @@
   <param name="/pins/launcher_motor_right_channel" value="14" />
   <param name="/pins/launcher_base_channel" value="10" />
   <param name="/pins/launcher_up_channel" value="11" />
+  <param name="/pins/launcher_trigger_channel" value="12" />
 
 
   <!-- Balls -->
