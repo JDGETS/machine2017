@@ -10,23 +10,27 @@
 
   <node pkg="launcher" name="launcher_tfs" type="launcher_tf.py" />
 
+  <!-- Robot trajectory -->
   <node pkg="hector_trajectory_server" name="hector_trajectory_server" type="hector_trajectory_server">
     <param name="trajectory_publish_rate" value="10" />
     <param name="trajectory_update_rate" value="10" />
     <param name="source_frame_name" value="base_footprint" />
   </node>
 
-  <node pkg="ai" name="static_covariance" type="static_covariance.py">
-    <remap from="/pose" to="/slam_pose" />
-    <remap from="/pose_cov" to="/slam_pose_cov" />
-  </node>
 
+  <!-- SLAM -->
   <node name="crsm_slam_node" type="crsm_slam_node" pkg="crsm_slam" ns="crsm_slam" output="screen">
     <remap from="laser_scan" to="/scan" />
   </node>
 
   <rosparam file="$(find crsm_slam)/config/crsm_slam/crsm_slam_parameters.yaml" command="load" ns="crsm_slam" />
 
+  <node pkg="ai" name="static_covariance" type="static_covariance.py">
+    <remap from="/pose" to="/slam_pose" />
+    <remap from="/pose_cov" to="/slam_pose_cov" />
+  </node>
+
+  <!-- Velocities -->
   <group>
     <remap from="/cmd_vel" to="/cmd_vel_auto" />
     <include file="$(find ai)/launch/move_base.launch"></include>
@@ -45,11 +49,10 @@
 
   <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
 
-  <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan /scan_raw_dump /scan_raw" />
+  <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan_in /scan_raw_dump /scan_raw" />
 
+  <!-- invert scan of /scan_in to /scan -->
   <node pkg="ai" name="invert_scan" type="invert_scan.py" />
 
-  <!--
   <node pkg="ai" name="autonomous" type="autonomous.py" output="screen"/>
-  -->
 </launch>

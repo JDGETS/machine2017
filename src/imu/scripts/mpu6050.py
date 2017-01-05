@@ -50,7 +50,7 @@ drift_z = 0
 
 rospy.loginfo("Measuring average drift of gyroscope")
 
-for _ in range(1000):
+for _ in range(100):
     if rospy.is_shutdown():
         break
     drift_x += read_word_2c(0x43) / 131

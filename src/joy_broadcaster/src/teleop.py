@@ -2,6 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Bool
 from sensor_msgs.msg import Joy
 import rospkg
 import subprocess
@@ -47,7 +48,8 @@ buttons = {"left": "axes:0:+",
            "backwards": "buttons:2",
            "spin_left": "buttons:4",
            "spin_right": "buttons:5",
-           "change_state": "buttons:8"}
+           "change_state": "buttons:8",
+           "toggle_elevator": "buttons:6"}
 
 linear_increment = 0.1
 max_linear_vel = 0.85
@@ -71,6 +73,7 @@ robot_state = 0
 
 scan_mux = rospy.ServiceProxy('/scan_select', MuxSelect)
 cmd_vel_mux = rospy.ServiceProxy('/cmd_vel_select', MuxSelect)
+elevator_pub = rospy.Publisher('/balls/grab', Bool, queue_size=10)
 
 def activate_scan():
     scan_mux('/scan_raw')
@@ -135,6 +138,11 @@ def process_input(msg):
 
         if robot_state == 3:
             disable_autonomous()
+
+    if get_button_value(msg, "toggle_elevator") > 0:
+        elevator = not elevator
+
+        elevator_pub.publish(Bool(elevator))
 
 
 def change_state(new_state):
