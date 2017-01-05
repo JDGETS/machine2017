@@ -65,7 +65,7 @@ def handle_trigger(msg):
     global trigger_state
     trigger_state = msg.data
 
-    if trigger_state:
+    if not trigger_state:
         pub.publish(PulseWidth(trigger_channel, 550))
     else:
         pub.publish(PulseWidth(trigger_channel, 2300))
