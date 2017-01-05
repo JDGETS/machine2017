@@ -1,6 +1,8 @@
 <launch>
-  <node pkg="rviz" name="rviz" type="rviz" args="$(env HOME)/machine2017/rviz/control_station.rviz">
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(env HOME)/machine2017/rviz/control_station.rviz">
   </node>
+
+  <include file="launch/pins.launch"></include>
 
   <include file="launch/tf.launch"></include>
 
