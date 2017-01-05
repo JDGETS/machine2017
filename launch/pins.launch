@@ -17,4 +17,8 @@
   <param name="/pins/launcher_base_channel" value="10" />
   <param name="/pins/launcher_up_channel" value="11" />
 
+
+  <!-- Balls -->
+  <param name="/pins/moissoneuse_channel" value="6" />
+  <param name="/pins/elevator_channel" value="6" />
 </launch>

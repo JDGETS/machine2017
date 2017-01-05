@@ -48,7 +48,7 @@ def handle_speed(msg):
 
 def handle_angle_base(msg):
     angle = msg.data
-    angle = int(2.7314 * angle + 1474.1)
+    angle = int(2.7314 * angle + 1675)
 
     pub.publish(PulseWidth(angle_base_channel, angle))
 
@@ -66,9 +66,9 @@ def handle_trigger(msg):
     trigger_state = msg.data
 
     if trigger_state:
-        pub.publish(PulseWidth(trigger_channel, 200))
+        pub.publish(PulseWidth(trigger_channel, 550))
     else:
-        pub.publish(PulseWidth(trigger_channel, 800))
+        pub.publish(PulseWidth(trigger_channel, 2300))
 
 
 def handle_launch(msg):
