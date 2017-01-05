@@ -22,9 +22,6 @@ trigger_channel = rospy.get_param('/pins/launcher_trigger_channel', 12)
 
 pub = rospy.Publisher('/pulse_width', PulseWidth, queue_size=10)
 
-pub.publish(PulseWidth(motor_left_channel, 750))
-pub.publish(PulseWidth(motor_right_channel, 750))
-
 # True if trigger is open
 # False if trigger is closed
 trigger_state = False

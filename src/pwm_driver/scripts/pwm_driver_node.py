@@ -8,6 +8,9 @@ rospy.init_node('pwm_driver')
 
 i2c_address = int(rospy.get_param('~i2c_address', '0x41'), 0)
 
+motor_left_channel = rospy.get_param('/pins/launcher_motor_left_channel', 13)
+motor_right_channel = rospy.get_param('/pins/launcher_motor_right_channel', 14)
+
 pi = pigpio.pi()
 pwm = PWM(pi, address=i2c_address)
 
@@ -22,6 +25,9 @@ def handle_pulse_width(msg):
 
 rospy.Subscriber('/duty_cycle', DutyCycle, handle_duty_cycle)
 rospy.Subscriber('/pulse_width', PulseWidth, handle_pulse_width)
+
+pwm.set_pulse_width(motor_left_channel, 750)
+pwm.set_pulse_width(motor_right_channel, 750)
 
 rospy.spin()
 
