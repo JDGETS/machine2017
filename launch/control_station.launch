@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="rviz" name="rviz" type="rviz">
+  <node pkg="rviz" name="rviz" type="rviz" args="$(env HOME)/machine2017/rviz/control_station.rviz">
   </node>
 
   <include file="launch/tf.launch"></include>
