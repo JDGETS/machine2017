@@ -71,7 +71,7 @@ state = STOPPED
 # states = [booting, sur le terrain, autonomous, manuel]
 robot_state = 0
 
-scan_mux = rospy.ServiceProxy('/scan_select', MuxSelect)
+scan_mux = rospy.ServiceProxy('/scan_in_select', MuxSelect)
 cmd_vel_mux = rospy.ServiceProxy('/cmd_vel_select', MuxSelect)
 elevator_pub = rospy.Publisher('/balls/grab', Bool, queue_size=10)
 

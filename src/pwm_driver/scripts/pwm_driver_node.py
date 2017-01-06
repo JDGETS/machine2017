@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-# import pigpio
+import pigpio
 from driver import PWM
 from pwm_driver.msg import *
 
