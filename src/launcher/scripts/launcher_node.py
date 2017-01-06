@@ -33,10 +33,7 @@ def map_range(x, in_min, in_max, out_min, out_max):
 
 def handle_speed(msg):
     speed = msg.data
-    micro = 750
-
-    if speed > 0:
-        micro = int(speed * 5.0 + 885)
+    micro = 750 + speed
 
     pub.publish(PulseWidth(motor_left_channel, micro))
     pub.publish(PulseWidth(motor_right_channel, micro))
@@ -44,17 +41,21 @@ def handle_speed(msg):
 
 def handle_angle_base(msg):
     angle = msg.data
-    angle = int(2.7314 * angle + 1675)
 
-    pub.publish(PulseWidth(angle_base_channel, angle))
+    if angle >= -90 and angle <= 90:
+        angle = int(2.7314 * angle + 1675)
+        pub.publish(PulseWidth(angle_base_channel, angle))
 
 
 def handle_angle_up(msg):
-    pente = -10.422
-    offset = 2159.2
-    angle = pente * msg.data + offset
+    angle = msg.data
 
-    pub.publish(PulseWidth(angle_up_channel, angle))
+    if angle >= 0 and angle <= 60:
+        pente = -10.422
+        offset = 2159.2
+        angle = pente * msg.data + offset
+
+        pub.publish(PulseWidth(angle_up_channel, angle))
 
 
 def handle_trigger(msg):
@@ -67,10 +68,35 @@ def handle_trigger(msg):
         pub.publish(PulseWidth(trigger_channel, 2300))
 
 
+def handle_recup_ball(msg):
+    pub.publish(PulseWidth(trigger_channel, 2300))
+    time.sleep(0.1)
+    handle_angle_base(Float32(-73))
+    handle_angle_up(Float32(0))
+
+    time.sleep(1)
+    pub.publish(PulseWidth(trigger_channel, 0))
+
+    pub.publish(PulseWidth(15, 1475))
+
+    time.sleep(0.5)
+
+    pub.publish(PulseWidth(15, 550))
+    handle_angle_base(Float32(0))
+    handle_angle_up(Float32(53))
+
+
+
 def handle_launch(msg):
+    handle_speed(Float32(270))
+    time.sleep(1)
     handle_trigger(Bool(True))
-    rospy.sleep(0.5)
+    time.sleep(0.5)
     handle_trigger(Bool(False))
+    time.sleep(1)
+    pub.publish(PulseWidth(trigger_channel, 2300))
+    handle_speed(Float32(0))
+
 
 
 rospy.Subscriber('/launcher/speed', Float32, handle_speed)
@@ -79,5 +105,8 @@ rospy.Subscriber('/launcher/angle_up', Float32, handle_angle_up)
 rospy.Subscriber('/launcher/trigger', Bool, handle_trigger)
 
 rospy.Subscriber('/launcher/launch', Empty, handle_launch)
+rospy.Subscriber('/launcher/recup', Empty, handle_recup_ball)
+
+
 
 rospy.spin()

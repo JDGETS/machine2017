@@ -33,13 +33,24 @@
   <!-- Velocities -->
   <group>
     <remap from="/cmd_vel" to="/cmd_vel_auto" />
-    <include file="$(find ai)/launch/move_base.launch"></include>
+
   </group>
 
+  <!--
+      <include file="$(find ai)/launch/move_base.launch"></include>
+  -->
+
+  <!--
   <group>
     <remap from="/cmd_vel" to="/cmd_vel_man" />
-    <include file="$(find joy_broadcaster)/launch/joy_broadcaster.launch"></include>
-  </group>
+
+</group>
+  -->
+
+
+  <include file="$(find joy_broadcaster)/launch/joy_broadcaster.launch"></include>
+
+  <node pkg="moteurs" name="moteurs" type="moteurs_node.py" />
 
   <node pkg="topic_tools" name="cmd_vel_mux" type="mux" args="/cmd_vel /cmd_vel_auto /cmd_vel_man" />
 
@@ -49,13 +60,13 @@
 
   <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
 
-  <!--
-  <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan_in /scan_raw_dump /scan_raw" />
-  -->
+  <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan /scan_raw_dump /scan_raw" />
 
   <node pkg="ai" name="invert_scan" type="invert_scan.py" />
 
-  <node pkg="ai" name="autonomous" type="autonomous.py" output="screen"/>
+  <!--
+      <node pkg="ai" name="autonomous" type="autonomous.py" output="screen"/>
+  -->
 
   <node pkg="balls" name="balls_node" type="balls_node.py" output="screen" />
 </launch>

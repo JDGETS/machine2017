@@ -45,11 +45,13 @@ buttons = {"left": "axes:0:+",
            "accelerate": "axes:7:+",
            "deccelerate": "axes:7:-",
            "forward": "buttons:1",
-           "backwards": "buttons:2",
+           "backwards": "buttons:0",
            "spin_left": "buttons:4",
            "spin_right": "buttons:5",
            "change_state": "buttons:8",
-           "toggle_elevator": "buttons:6"}
+           "toggle_elevator": "buttons:6",
+           "launch_ball": "buttons:2",
+           "recup_ball": "buttons:3"}
 
 linear_increment = 0.1
 max_linear_vel = 0.85
@@ -74,6 +76,9 @@ robot_state = 0
 scan_mux = rospy.ServiceProxy('/scan_in_select', MuxSelect)
 cmd_vel_mux = rospy.ServiceProxy('/cmd_vel_select', MuxSelect)
 elevator_pub = rospy.Publisher('/balls/grab', Bool, queue_size=10)
+
+launch_ball = rospy.Publisher('/launcher/launch', Empty, queue_size=10)
+recup_ball = rospy.Publisher('/launcher/recup', Empty, queue_size=10)
 
 def activate_scan():
     scan_mux('/scan_raw')
@@ -144,6 +149,11 @@ def process_input(msg):
 
         elevator_pub.publish(Bool(elevator))
 
+    if get_button_value(msg, "recup_ball") > 0:
+        recup_ball.publish(Empty())
+
+    if get_button_value(msg, "launch_ball") > 0:
+        launch_ball.publish(Empty())
 
 def change_state(new_state):
     global linear_vel, default_linear_vel, state
