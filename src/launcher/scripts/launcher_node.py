@@ -48,7 +48,7 @@ def handle_angle_base(msg):
 
 
 def handle_angle_up(msg):
-    angle = msg.data
+    angle = msg.data + 5
 
     if angle >= 0 and angle <= 60:
         pente = -10.422
@@ -69,12 +69,14 @@ def handle_trigger(msg):
 
 
 def handle_recup_ball(msg):
-    pub.publish(PulseWidth(trigger_channel, 2300))
+    handle_trigger(Bool(False))
+
     time.sleep(0.1)
     handle_angle_base(Float32(-73))
     handle_angle_up(Float32(0))
 
     time.sleep(1)
+
     pub.publish(PulseWidth(trigger_channel, 0))
 
     pub.publish(PulseWidth(15, 1475))
@@ -82,6 +84,7 @@ def handle_recup_ball(msg):
     time.sleep(0.5)
 
     pub.publish(PulseWidth(15, 550))
+    
     handle_angle_base(Float32(0))
     handle_angle_up(Float32(53))
 

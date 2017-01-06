@@ -135,14 +135,16 @@ def process_input(msg):
             robot_state += 1
 
         if robot_state == 1:
-            activate_scan()
+            # activate_scan()
+            pass
 
         if robot_state == 2:
             # send goal
             pass
 
         if robot_state == 3:
-            disable_autonomous()
+            # disable_autonomous()
+            pass
 
     if get_button_value(msg, "toggle_elevator") > 0:
         elevator = not elevator
