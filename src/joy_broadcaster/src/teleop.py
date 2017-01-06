@@ -56,12 +56,12 @@ buttons = {"left": "axes:0:+",
 linear_increment = 0.1
 max_linear_vel = 0.85
 min_linear_vel = -0.85
-default_linear_vel = 0.4
+default_linear_vel = 0.3
 
 angular_increment = 0.5
-max_angular_vel = 2
+max_angular_vel = 1
 
-spin_speed = 1.0
+spin_speed = 3.0
 
 last_joy_message = None
 linear_vel = 0.0

@@ -47,6 +47,9 @@
 </group>
   -->
 
+  <node pkg="launcher" name="launcher" type="launcher_node.py">
+  </node>
+
 
   <include file="$(find joy_broadcaster)/launch/joy_broadcaster.launch"></include>
 

@@ -3,8 +3,6 @@
 
   <include file="$(arg MACHINE_PATH)/launch/lidar.launch"></include>
 
-  <node pkg="launcher" name="launcher" type="launcher_node.py">
-  </node>
 
   <node pkg="imu" name="mpu6050" type="mpu6050.py" respawn="true"/>
 
