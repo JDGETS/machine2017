@@ -15,7 +15,7 @@ def handle_start(msg):
     goal.target_pose.pose.position.y = 0
 
     goal.target_pose.pose.orientation.w = 1
-    goal.target_pose.header.frame_id = 'goal1'
+    goal.target_pose.header.frame_id = 'goal2'
     goal.target_pose.header.stamp = rospy.Time.now()
 
     print 'waiting for server'

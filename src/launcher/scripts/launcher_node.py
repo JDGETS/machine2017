@@ -50,7 +50,7 @@ def handle_angle_base(msg):
 def handle_angle_up(msg):
     angle = msg.data + 5
 
-    if angle >= 0 and angle <= 60:
+    if angle >= 0 and angle <= 65:
         pente = -10.422
         offset = 2159.2
         angle = pente * msg.data + offset
@@ -65,7 +65,7 @@ def handle_trigger(msg):
     if not trigger_state:
         pub.publish(PulseWidth(trigger_channel, 550))
     else:
-        pub.publish(PulseWidth(trigger_channel, 2300))
+        pub.publish(PulseWidth(trigger_channel, 2200))
 
 
 def handle_recup_ball(msg):
@@ -109,6 +109,8 @@ def handle_launch(msg):
 
     handle_speed(Float32(0))
     handle_trigger(Bool(True))
+
+    rospy.sleep(0.2)
 
 
 

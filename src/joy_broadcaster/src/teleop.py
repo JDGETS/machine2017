@@ -73,12 +73,13 @@ state = STOPPED
 # states = [booting, sur le terrain, autonomous, manuel]
 robot_state = 0
 
-scan_mux = rospy.ServiceProxy('/scan_in_select', MuxSelect)
+scan_mux = rospy.ServiceProxy('/scan_mux_select', MuxSelect)
 cmd_vel_mux = rospy.ServiceProxy('/cmd_vel_select', MuxSelect)
 elevator_pub = rospy.Publisher('/balls/grab', Bool, queue_size=10)
 
 launch_ball = rospy.Publisher('/launcher/launch', Empty, queue_size=10)
 recup_ball = rospy.Publisher('/launcher/recup', Empty, queue_size=10)
+ai_start = rospy.Publisher('/ai/start', Empty, queue_size=10)
 
 elevator = False
 
@@ -139,15 +140,15 @@ def process_input(msg):
             robot_state += 1
 
         if robot_state == 1:
-            # activate_scan()
+            activate_scan()
             pass
 
         if robot_state == 2:
-            # send goal
+            ai_start.publish(Empty())
             pass
 
         if robot_state == 3:
-            # disable_autonomous()
+            disable_autonomous()
             pass
 
 
