@@ -37,11 +37,17 @@ def handle_cmd_vel(msg):
     speed = msg.linear.x
     angular = msg.angular.z
 
-    left_speed = (speed - angular * robot_width * 0.5) / max_speed
-    right_speed = (speed + angular * robot_width * 0.5) / max_speed
+    left_speed = (speed - angular * robot_width * 0.5)
+    right_speed = (speed + angular * robot_width * 0.5)
+
+    right_speed *= 1.3
+
+    left_speed /= max_speed
+    right_speed /= max_speed
 
     left_speed = clamp(left_speed, -1, 1) * 100
     right_speed = clamp(right_speed, -1, 1) * 100
+
 
     handle_speed(left_forward, left_backward, left_speed)
     handle_speed(right_forward, right_backward, right_speed)

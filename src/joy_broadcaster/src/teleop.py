@@ -54,10 +54,10 @@ buttons = {"left": "axes:0:+",
 linear_increment = 0.1
 max_linear_vel = 0.85
 min_linear_vel = -0.85
-default_linear_vel = 0.7
+default_linear_vel = 0.4
 
-angular_increment = 0.1
-max_angular_vel = 0.8
+angular_increment = 0.5
+max_angular_vel = 2
 
 spin_speed = 1.0
 
