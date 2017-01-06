@@ -6,7 +6,7 @@
   <node pkg="launcher" name="launcher" type="launcher_node.py">
   </node>
 
-  <node pkg="imu" name="mpu6050" type="mpu6050.py" repsawm="true"/>
+  <node pkg="imu" name="mpu6050" type="mpu6050.py" respawm="true"/>
 
   <node pkg="pwm_driver" name="pwm_driver" type="pwm_driver_node.py">
     <param name="i2c_address" value="0x41" />

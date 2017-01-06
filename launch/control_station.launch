@@ -49,10 +49,13 @@
 
   <node pkg="ai" name="obstacle_generator" type="obstacle_generator.py" output="screen" />
 
+  <!--
   <node pkg="topic_tools" name="scan_mux" type="mux" args="/scan_in /scan_raw_dump /scan_raw" />
+  -->
 
-  <!-- invert scan of /scan_in to /scan -->
   <node pkg="ai" name="invert_scan" type="invert_scan.py" />
 
   <node pkg="ai" name="autonomous" type="autonomous.py" output="screen"/>
+
+  <node pkg="balls" name="balls_node" type="balls_node.py" output="screen" />
 </launch>
