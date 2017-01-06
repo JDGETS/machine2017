@@ -21,5 +21,5 @@
 
   <!-- Balls -->
   <param name="/pins/moissoneuse_channel" value="6" />
-  <param name="/pins/elevator_channel" value="6" />
+  <param name="/pins/elevator_channel" value="4" />
 </launch>

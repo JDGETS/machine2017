@@ -80,6 +80,8 @@ elevator_pub = rospy.Publisher('/balls/grab', Bool, queue_size=10)
 launch_ball = rospy.Publisher('/launcher/launch', Empty, queue_size=10)
 recup_ball = rospy.Publisher('/launcher/recup', Empty, queue_size=10)
 
+elevator = False
+
 def activate_scan():
     scan_mux('/scan_raw')
 
@@ -131,6 +133,8 @@ def process_input(msg):
     global robot_state
 
     if get_button_value(msg, "change_state") > 0:
+        print robot_state
+
         if robot_state < 3:
             robot_state += 1
 
@@ -146,6 +150,8 @@ def process_input(msg):
             # disable_autonomous()
             pass
 
+
+    global elevator
     if get_button_value(msg, "toggle_elevator") > 0:
         elevator = not elevator
 
