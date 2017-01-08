@@ -159,7 +159,14 @@ Visualization Manager:
               goal2_ring:
                 {}
             odom:
-              {}
+              base_footprint:
+                base_link:
+                  laser:
+                    {}
+                  launcher_base:
+                    launcher_elevation:
+                      launcher_tip:
+                        {}
       Update Interval: 0
       Value: true
     - Alpha: 0.3
@@ -183,12 +190,12 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz_plugin_tutorials/Imu
       Color: 204; 51; 204
-      Enabled: true
+      Enabled: false
       History Length: 1
       Name: Imu
       Topic: /imu
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path

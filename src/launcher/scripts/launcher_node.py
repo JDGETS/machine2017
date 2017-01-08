@@ -63,9 +63,9 @@ def handle_trigger(msg):
     trigger_state = msg.data
 
     if not trigger_state:
-        pub.publish(PulseWidth(trigger_channel, 550))
+        pub.publish(PulseWidth(trigger_channel, 600))
     else:
-        pub.publish(PulseWidth(trigger_channel, 2200))
+        pub.publish(PulseWidth(trigger_channel, 1200))
 
 
 def handle_recup_ball(msg):
@@ -73,11 +73,12 @@ def handle_recup_ball(msg):
 
     handle_trigger(Bool(False))
 
-    rospy.sleep(0.1)
+    rospy.sleep(0.5)
+
+    pub.publish(PulseWidth(trigger_channel, 0))
 
     handle_angle_base(Float32(-73))
     handle_angle_up(Float32(0))
-
 
     rospy.sleep(2)
 
@@ -90,14 +91,14 @@ def handle_recup_ball(msg):
     pub.publish(PulseWidth(15, 2600))
 
 
-
 def handle_launch(msg):
+    pub.publish(PulseWidth(trigger_channel, 0))
     handle_angle_base(Float32(0))
     handle_angle_up(Float32(58.36))
 
     rospy.sleep(2)
 
-    handle_speed(Float32(222))
+    handle_speed(Float32(234))
 
     rospy.sleep(2)
 
@@ -111,6 +112,8 @@ def handle_launch(msg):
     handle_trigger(Bool(True))
 
     rospy.sleep(0.2)
+
+    pub.publish(PulseWidth(trigger_channel, 0))
 
 
 

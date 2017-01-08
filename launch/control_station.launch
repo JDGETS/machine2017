@@ -33,7 +33,9 @@
   <!-- Velocities -->
   <group>
     <remap from="/cmd_vel" to="/cmd_vel_auto" />
-    <include file="$(find ai)/launch/move_base.launch"></include>
+    <!--
+        <include file="$(find ai)/launch/move_base.launch"></include>
+        -->
   </group>
 
   <group>
@@ -46,7 +48,7 @@
 
   <node pkg="moteurs" name="moteurs" type="moteurs_node.py" />
 
-  <node pkg="topic_tools" name="cmd_vel_mux" type="mux" args="/cmd_vel /cmd_vel_auto /cmd_vel_man" />
+  <node pkg="topic_tools" name="cmd_vel_mux" type="mux" args="/cmd_vel /cmd_vel_man /cmd_vel_auto" />
 
   <node pkg="ai" name="find_walls" type="find_walls.py" output="screen" />
 

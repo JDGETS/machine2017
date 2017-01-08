@@ -1,5 +1,5 @@
 TrajectoryPlannerROS:
-  max_vel_x: 1.0
+  max_vel_x: 0.5
   min_vel_x: 0.4
   #The rotational velocity allowed for the base in radians/sec
   max_vel_theta: 2.0
